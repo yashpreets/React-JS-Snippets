@@ -28,7 +28,18 @@ class ListTable extends React.Component {
             sizePerPage:sizePerPage,
             defaultSortOrder:sortingOrder
         }
-        this.rowActionButtonFunction = this.props.clickAction;
+        this.colClickHandler = function(){}
+        this.rowClickHandler = function(){}
+        this.rowActionButtonFunction = function(){}
+        if(this.props.clickAction){
+            this.rowActionButtonFunction = this.props.clickAction;
+        }
+        if(this.props.rowClickHandler){
+            this.rowClickHandler = this.props.rowClickHandler;
+        }
+        if(this.props.colClickHandler){
+            this.colClickHandler = this.props.colClickHandler;
+        }
     };
     componentWillReceiveProps(newProps){
         this.setState({dashboardData:newProps.dashboardData,column:newProps.column,keyIndex:newProps.keyIndex});
@@ -51,6 +62,14 @@ class ListTable extends React.Component {
         </MuiThemeProvider>
         );
      }
+
+    colClick(cell, row){
+        return (
+            <label onClick={() => {this.colClickHandler(cell)}} className="pointer">
+                {cell}
+        </label>) ;
+    }
+
     render() {
         const options = {
             page: 1,  // which page you want to show as default
@@ -76,6 +95,7 @@ class ListTable extends React.Component {
             exportCSVBtn: this.createCustomExportCSVButton,
             defaultSortName: this.state.defaultSortColumn,
             defaultSortOrder: this.state.defaultSortOrder,
+            //onRowClick: this.rowClickHandler,
         };
         let columnList = [];
         let cnt = 0;
@@ -92,9 +112,9 @@ class ListTable extends React.Component {
                  width = this.state.width[key];
             }
             if(this.state.keyIndex == cnt) {
-                columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } width={width} dataSort={ true } hidden = {hidden} dataField={key} isKey key={cnt}>{this.state.column[key]}</TableHeaderColumn>);
+                columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } dataFormat={this.colClick.bind(this)} width={width} dataSort={ true } hidden = {hidden} dataField={key} isKey key={cnt}>{this.state.column[key]}</TableHeaderColumn>);
             }else{
-                columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } width={width} dataSort={ true } hidden = {hidden} dataField={key} key={cnt}>{this.state.column[key]}</TableHeaderColumn>);
+                columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } dataFormat={this.colClick.bind(this)} width={width} dataSort={ true } hidden = {hidden} dataField={key} key={cnt}>{this.state.column[key]}</TableHeaderColumn>);
             }
             cnt++;
         }

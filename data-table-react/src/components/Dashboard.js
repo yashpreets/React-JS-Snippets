@@ -18,8 +18,14 @@ var merchantListData = merchantList.getMerchantList();// make this from server
 function onRowSelect(row, isSelected, e) {
     sessionStorage.setItem("merchantId",row['userid']);
     sessionStorage.setItem("merchantName",row['name']);
-    window.location.href = "/dashboard";
+    console.log(row);
+    //window.location.href = "/dashboard";
 }
+
+function onCellClick(cell){
+	console.log(cell);
+}
+
 const columnWidth = {
 	name:'35',
 	userid:'15',
@@ -81,7 +87,7 @@ class Dashboard extends Component {
 		return (
 			<div className="adminDashboard">
 				<Loader loaded={this.state.loaded}>
-					<ListTable dashboardData={this.state.dashboardData} column={columns} keyIndex="1" clickAction={onRowSelect} columnWidth={columnWidth} ></ListTable>
+					<ListTable dashboardData={this.state.dashboardData} column={columns} keyIndex="1" colClickHandler= {onCellClick} clickAction={onRowSelect} columnWidth={columnWidth} ></ListTable>
 				</Loader>
 			</div>);
 	}
