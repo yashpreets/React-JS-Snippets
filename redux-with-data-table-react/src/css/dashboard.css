@@ -1,0 +1,88 @@
+/* fontawesome */
+[class*="fontawesome-"]:before {
+  font-family: 'FontAwesome', sans-serif;
+}
+.left {
+  float: left;
+}
+.flex_box{
+  display: flex;
+  justify-content: center;
+}
+.clear {
+clear: both;
+}
+
+.buysblock {
+  background: rgb(45, 101, 113);
+  text-shadow: 1px 1px;
+  box-shadow: 2px 2px;
+}
+
+.commentsblock {
+  background: rgb(45, 101, 113);
+  text-shadow: 1px 1px;
+  box-shadow: 2px 2px;
+}
+.metroblock {
+  width: 44em;
+  padding: -1em 4em;
+  color: #fff;
+  font-family: 'Open Sans', sans-serif;
+  margin: 2em;
+  box-shadow: 2px 2px 5px -1px #fff;
+}
+
+.metroblock h1{
+  font-size: 3em;
+}
+.metroblock h2{
+  font-size: 2em;
+}
+
+.metroblock h1, .metroblock h2, .metroblock .icon {
+  font-weight: 300;
+  padding: 0;
+}
+.metroblock h1, .metroblock .icon {
+  text-align: center;
+}
+.metroblock .icon {
+  margin-right: .2em;
+}
+.centerAlign{
+    margin-left: 7%;
+}
+.expiredBalance{
+	background:rgb(45, 101, 113);
+}
+
+.backButton{
+  float:left;
+  margin-left: 1%;
+  color: white !important;
+}
+
+
+.backButton a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+}
+
+.merchantName{
+    text-align: center;
+    font-family: 'Tangerine', 'Inconsolata', 'Droid Sans', serif;
+    font-size: 20px;
+}
+.listTableAddonButton{
+  background-color:#337ab7 !important; 
+  border-color:#4cae4c !important;
+  margin-left: 2% !important;
+  margin-bottom: -9px !important;
+  margin-right: 0px !important;
+  margin-top: 0px !important;
+}
+.listTableAddonButton Button{
+  background-color:orange !important; 
+}
