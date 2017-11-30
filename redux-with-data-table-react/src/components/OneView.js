@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import Roaster from './Roaster.js';
 import Status from './Status.js';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as oneViewActions from '../actions/oneViewActions';
+
 class OneView extends Component {
 	constructor(props){
 		super(props);
 		this.state={
-		  tab:"roaster",
 		}
 	};
 	onTabClick(e,value){
-		this.setState({tab:value});
+		this.props.actions.showTab(value);
 	}
 	render(){
-		this.tabField = (this.state.tab == "status")?<Status/>:<Roaster/>;
+		this.tabField = (this.props.oneViewTabChange.oneViewtab == "status")?<Status/>:<Roaster/>;
 		return(<div>
 				<ul>
 					<a onClick= {(e) => this.onTabClick(e,"roaster")} className="pointer" > Roaster </a>
@@ -24,5 +27,14 @@ class OneView extends Component {
 		);
 	}
 }
-
-export default OneView;
+function mapStateToProps(state, props) {
+    return {
+        oneViewTabChange: state.oneViewTabChange
+    };
+}
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(oneViewActions, dispatch)
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(OneView);
