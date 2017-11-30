@@ -77,7 +77,7 @@ class DataTable extends React.Component {
             nextPageTitle: 'Go to next', 
             firstPageTitle: 'Go to first', 
             lastPageTitle: 'Go to Last', 
-            paginationShowsTotal: this.renderShowsTotal, 
+            //paginationShowsTotal: this.renderShowsTotal, 
             paginationPosition: 'bottom',  
             clearSearch: true,
             alwaysShowAllBtns: true,
@@ -112,7 +112,7 @@ class DataTable extends React.Component {
             columnList.push(<TableHeaderColumn width={'22'} dataField= "button" key="buttonClick" dataFormat={this.buttonFormatter.bind(this)} >Action</TableHeaderColumn>);
         }
     	return (
-    			<BootstrapTable data={ this.props.dashboardData }  pagination={ true } options={ options } search exportCSV = {this.props.showExportOption}>
+    			<BootstrapTable data={ this.props.dashboardData }  pagination={ true } ignoreSinglePage={true} options={ options } search = {this.props.showSearchBar} exportCSV = {this.props.showExportOption}>
                 	{columnList}
         		</BootstrapTable>
         );

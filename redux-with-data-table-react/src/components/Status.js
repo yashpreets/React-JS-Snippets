@@ -77,7 +77,7 @@ class Status extends Component {
 			return (
 				<div className="adminDashboard">
 					<Loader loaded={this.state.loaded}>
-						<DataTable dashboardData={this.state.dashboardData} column={columns} keyIndex="1" colClickHandler= {onCellClick} clickAction={onRowSelect} columnWidth={columnWidth} showExportOption ={true} ></DataTable>
+						<DataTable dashboardData={this.state.dashboardData} column={columns} keyIndex="1" colClickHandler= {onCellClick} clickAction={onRowSelect} columnWidth={columnWidth}  showSearchBar={true} ></DataTable>
 					</Loader>
 				</div>);
 		}

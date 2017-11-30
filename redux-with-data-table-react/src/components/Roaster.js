@@ -64,6 +64,11 @@ class Roaster extends Component {
 		this.setState({dashboardData:serverResponse});
 	}
 
+	fetchData(e,data){
+		alert("write code to fetch "+ data);
+		//console.log(data);
+	}
+
 	render(){
 		let columns = {"employeeName":"Employee"};
 		if(this.state.dashboardData[0] != undefined){
@@ -77,7 +82,11 @@ class Roaster extends Component {
 			return (
 				<div className="adminDashboard">
 					<Loader loaded={this.state.loaded}>
-						<DataTable dashboardData={this.state.dashboardData} column={columns} keyIndex="1" colClickHandler= {onCellClick} clickAction={onRowSelect} columnWidth={columnWidth} showExportOption ={true} ></DataTable>
+						<div className="pagination-div">
+							<a id="next" className="pagination-button pull-right" href="#" onClick= {(e) => this.fetchData(e,"nextData")} >»</a>
+							<a id="prev" className="pagination-button pull-right" href="#" onClick= {(e) => this.fetchData(e,"prevData")} >«</a>
+						</div>
+						<DataTable dashboardData={this.state.dashboardData} column={columns} keyIndex="1" colClickHandler= {onCellClick} clickAction={onRowSelect} columnWidth={columnWidth} showExportOption ={false} ></DataTable>
 					</Loader>
 				</div>);
 		}
