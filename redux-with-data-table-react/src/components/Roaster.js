@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import './../css/AdminDashboard.css';
 import './../css/merchantList.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import DataTable from './containers/DataTable2.js';
+import DataTable from './DataTable.js';
 import fetch from 'cross-fetch';
+
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as RoasterActions from '../actions/RoasterActions';
 
 var Loader = require('react-loader');
 var config = require('./../common/config.js');
-var commonFunctions = require('./../common/commonFunctions.js');
 var roasterList = require('../testJson/roasterData.js');
 var fetchRoasterUrl = config.config().fetchRoasterUrl;
-var constants = commonFunctions.constants();
-var errorMessages = commonFunctions.errorMessages();
 var roasterData = roasterList.getRoasterData();
 
 function onRowSelect(){
@@ -30,18 +31,8 @@ class Roaster extends Component {
 	constructor(props){
   		super(props);
   		this.state={
-  		  columns:'',
-		  dashboardData:'',
-		  loaded:false,
-		  showNotification:false,
-		  loadCounter:0
-		}
-        this.alertOptions = commonFunctions.alertOptionsObject();
- 	};
 
-	//Not used Currently can be used in case of (server error/ bad request)
-	showAlert(message){
- 		this.setState({notificationMessage:message,showNotification:true});
+		}
  	};
 
 	componentDidMount(){
@@ -73,7 +64,7 @@ class Roaster extends Component {
 				console.log(data);
 				//Currently not using the response from the server,loading required json from file
 				let columns = self.filterResponseToCreateColumns(roasterData);
-				self.setState({dashboardData:roasterData,loaded:true,columns:columns});
+				self.props.actions.RoasterActions({type:'roasterDataLoaded',dashboardData:roasterData,columns:columns,loaded:true});
         });
 	}
 
@@ -99,14 +90,26 @@ class Roaster extends Component {
 	render(){
 		return (
 			<div className="adminDashboard">
-				<Loader loaded={this.state.loaded}>
+				<Loader loaded={this.props.RoasterActionsReducer.loaded}>
 					<div className="pagination-div">
 						<a id="next" className="pagination-button pull-right" href="#" onClick= {(e) => this.fetchData(e,"nextData")} >»</a>
 						<a id="prev" className="pagination-button pull-right" href="#" onClick= {(e) => this.fetchData(e,"prevData")} >«</a>
 					</div>
-					<DataTable dashboardData={this.state.dashboardData} column={this.state.columns} keyIndex="1" colClickHandler= {onCellClick} clickAction={onRowSelect} columnWidth={columnWidth} showExportOption ={false} ></DataTable>
+					<DataTable dashboardData={this.props.RoasterActionsReducer.dashboardData} column={this.props.RoasterActionsReducer.columns} keyIndex="1" colClickHandler= {onCellClick} clickAction={onRowSelect} columnWidth={columnWidth} showExportOption ={false} ></DataTable>
 				</Loader>
 			</div>);
 	}
 };
-export default Roaster;
+
+function mapStateToProps(state, props) {
+    return {
+        RoasterActionsReducer: state.RoasterActionsReducer
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(RoasterActions, dispatch)
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Roaster);

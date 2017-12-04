@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './../css/AdminDashboard.css';
 import './../css/merchantList.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import DataTable from './containers/DataTable2.js';
+import DataTable from './DataTable.js';
 var config = require('./../common/config.js');
 var commonFunctions = require('./../common/commonFunctions.js');
 var merchantList = require('../testJson/merchantList.js');
@@ -19,16 +19,15 @@ var roasterData = roasterList.getStatusData();
 function onRowSelect(){
 
 }
+
 function onCellClick(cell){
 	console.log(cell);
 }
 
 const columnWidth = {
-	name:'35',
-	userid:'15',
-	accessKey:'25',
-	CreatedOn:'20'
+
 };
+
 class Status extends Component {
 	constructor(props){
   		super(props);
@@ -38,7 +37,6 @@ class Status extends Component {
 		  showNotification:false,
 		  loadCounter:0
 		}
-        this.alertOptions = commonFunctions.alertOptionsObject();
  	};
 
  	startLoader(){
