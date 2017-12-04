@@ -124,3 +124,8 @@ exports.getStringTimestamp = function(date){
 exports.deleteSession = function() {
     sessionStorage.clear();
 };
+
+exports.getBasicAuthorization = function(username,password) {
+    var encodedData = window.btoa(username+password);
+    return 'Basic '+encodedData;
+}
