@@ -3,15 +3,13 @@ import './../css/AdminDashboard.css';
 import './../css/merchantList.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import DataTable from './containers/DataTable2.js';
+import fetch from 'cross-fetch';
+
+var Loader = require('react-loader');
 var config = require('./../common/config.js');
 var commonFunctions = require('./../common/commonFunctions.js');
-var merchantList = require('../testJson/merchantList.js');
 var roasterList = require('../testJson/roasterData.js');
-var Loader = require('react-loader');
-
-
-var serverBaseUrl = config.config().serverUrl;
-var getActions = commonFunctions.getActions();
+var fetchRoasterUrl = config.config().fetchRoasterUrl;
 var constants = commonFunctions.constants();
 var errorMessages = commonFunctions.errorMessages();
 var roasterData = roasterList.getRoasterData();
@@ -19,6 +17,7 @@ var roasterData = roasterList.getRoasterData();
 function onRowSelect(){
 
 }
+
 function onCellClick(cell){
 	console.log(cell);
 }
@@ -29,6 +28,7 @@ const columnWidth = {
 	accessKey:'25',
 	CreatedOn:'20'
 };
+
 class Roaster extends Component {
 	constructor(props){
   		super(props);
@@ -51,17 +51,31 @@ class Roaster extends Component {
  		this.setState({notificationMessage:message,showNotification:true});
  	};
 
-	fetchDashboardData(){
-		//add server call instead
-		this.stopLoader();
-		let serverResponse = roasterData;
-		this.setState({dashboardData:serverResponse});
-	}
-
 	componentDidMount(){
-		this.stopLoader();
-		let serverResponse = roasterData;
-		this.setState({dashboardData:serverResponse});
+		let self = this;
+		let authorization = "RUtBUlQ2OkVLQVJUNg==";
+		let requestOptions = {
+            url: fetchRoasterUrl,
+            options: {
+                METHOD: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'authorization': 'Basic RUtBUlQ2OkVLQVJUNg==',
+                }
+            }
+        }
+		fetch(requestOptions.url,requestOptions.options)
+			.then(function(response) {
+			    if (response.status >= 400) {
+			       throw new Error("Bad response from server");
+			    }
+		    	return response.json();
+		    }).then(function(data) {
+		    	self.stopLoader();
+     			console.log(data);
+            	self.setState({dashboardData:roasterData});
+  			});
 	}
 
 	fetchData(e,data){
@@ -79,18 +93,17 @@ class Roaster extends Component {
 					columns[key] = key;
 				}
 			}
-			return (
-				<div className="adminDashboard">
-					<Loader loaded={this.state.loaded}>
-						<div className="pagination-div">
-							<a id="next" className="pagination-button pull-right" href="#" onClick= {(e) => this.fetchData(e,"nextData")} >»</a>
-							<a id="prev" className="pagination-button pull-right" href="#" onClick= {(e) => this.fetchData(e,"prevData")} >«</a>
-						</div>
-						<DataTable dashboardData={this.state.dashboardData} column={columns} keyIndex="1" colClickHandler= {onCellClick} clickAction={onRowSelect} columnWidth={columnWidth} showExportOption ={false} ></DataTable>
-					</Loader>
-				</div>);
 		}
-		return (<div>No Data To Display</div>);
+		return (
+			<div className="adminDashboard">
+				<Loader loaded={this.state.loaded}>
+					<div className="pagination-div">
+						<a id="next" className="pagination-button pull-right" href="#" onClick= {(e) => this.fetchData(e,"nextData")} >»</a>
+						<a id="prev" className="pagination-button pull-right" href="#" onClick= {(e) => this.fetchData(e,"prevData")} >«</a>
+					</div>
+					<DataTable dashboardData={this.state.dashboardData} column={columns} keyIndex="1" colClickHandler= {onCellClick} clickAction={onRowSelect} columnWidth={columnWidth} showExportOption ={false} ></DataTable>
+				</Loader>
+			</div>);
 	}
 };
 export default Roaster;
