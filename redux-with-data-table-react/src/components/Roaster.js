@@ -45,7 +45,7 @@ class Roaster extends Component {
         let requestOptions = {
             url: fetchRoasterUrl+urlParams,
             options: {
-                METHOD: 'GET',
+                method: 'GET',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
