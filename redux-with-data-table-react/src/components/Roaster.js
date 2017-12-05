@@ -7,12 +7,9 @@ import DataTable from './DataTable.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as RoasterActions from '../actions/RoasterActions';
-
+import config from './../common/config';
 var Loader = require('react-loader');
-var config = require('./../common/config.js');
-var roasterList = require('../testJson/roasterData.js');
-var fetchRoasterUrl = config.config().fetchRoasterUrl;
-var roasterData = roasterList.getRoasterData();
+var fetchRoasterUrl = config.fetchRoasterUrl;
 
 function onRowSelect(){
 

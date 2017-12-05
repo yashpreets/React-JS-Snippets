@@ -3,14 +3,11 @@ import './../css/AdminDashboard.css';
 import './../css/merchantList.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import DataTable from './DataTable.js';
-var config = require('./../common/config.js');
 var commonFunctions = require('./../common/commonFunctions.js');
 var merchantList = require('../testJson/merchantList.js');
 var roasterList = require('../testJson/roasterData.js');
 var Loader = require('react-loader');
 
-
-var serverBaseUrl = config.config().serverUrl;
 var getActions = commonFunctions.getActions();
 var constants = commonFunctions.constants();
 var errorMessages = commonFunctions.errorMessages();

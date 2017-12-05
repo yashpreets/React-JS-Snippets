@@ -10,24 +10,30 @@ mkdir reactJs
 cd reactJs
 create-react-app reactfirst
 cd reactfirst
-npm start (--hot for auto deploy on code change)
-npm run build (every time code changes when running via nginx)
-serve -s build
+npm start (--hot for auto deploy on code change devlopment environment)
 
 ```
+## Deployment
+For Creating a Production Build
+```
+npm run build
+```
+Now we can serve this build using a static server or nginx server
+```
+npm install -g serve
+serve -s build
+```
 
-
-## Install nginx
+## Install And Starting Nginx
 
 ```
 brew install nginx
-sudo nginx
+sudo nginx (for starting)
 sudo nginx -s stop
-nginx -s reload
+nginx -s reload (For reloading)
 ```
 
-## Redirect rule via nginx
-
+## Redirect rule for nginx
 ```
 Nginx changes for server (Mac OSX)
 /usr/local/etc/nginx/nginx.conf
