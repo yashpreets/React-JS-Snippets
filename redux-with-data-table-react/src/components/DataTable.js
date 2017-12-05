@@ -112,7 +112,7 @@ class DataTable extends React.Component {
             columnList.push(<TableHeaderColumn width={'22'} dataField= "button" key="buttonClick" dataFormat={this.buttonFormatter.bind(this)} >Action</TableHeaderColumn>);
         }
     	return (
-    			<BootstrapTable data={ this.props.dashboardData }  pagination={ true } ignoreSinglePage={true} options={ options } search = {this.props.showSearchBar} exportCSV = {this.props.showExportOption}>
+    			<BootstrapTable data={ this.props.dashboardData }  pagination={ true } ignoreSinglePage={true} options={ options } search = {true} exportCSV = {true}>
                 	{columnList}
         		</BootstrapTable>
         );

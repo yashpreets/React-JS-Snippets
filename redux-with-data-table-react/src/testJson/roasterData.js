@@ -1,6 +1,6 @@
 exports.getRoasterData = function(){
 	let obj = [{
-		"employeeName":"yash 1",
+		"employeeName":"yash 8",
 		"Monday 2017-11-27":"8-16",
 		"Tuesday 2017-11-28":"8-16",
 		"Wednesday 2017-11-29":"8-16",
@@ -8,7 +8,27 @@ exports.getRoasterData = function(){
 		"Friday 2017-12-01":"8-16",
 		"Saturday 2017-12-02":"8-16",
 		"Sunday 2017-12-03":"Weekly off"
-	}]
+	},
+        {
+            "employeeName":"yash 5",
+            "Monday 2017-11-27":"8-16",
+            "Tuesday 2017-11-28":"8-16",
+            "Wednesday 2017-11-29":"8-16",
+            "Thursday 2017-11-30":"8-16",
+            "Friday 2017-12-01":"8-16",
+            "Saturday 2017-12-02":"8-16",
+            "Sunday 2017-12-03":"Weekly off"
+        },
+        {
+            "employeeName":"yash 3",
+            "Monday 2017-11-27":"8-15",
+            "Tuesday 2017-11-28":"8-15",
+            "Wednesday 2017-11-29":"8-16",
+            "Thursday 2017-11-30":"8-16",
+            "Friday 2017-12-01":"8-16",
+            "Saturday 2017-12-02":"8-16",
+            "Sunday 2017-12-03":"Weekly off"
+        }]
 	return obj;
 }
 
