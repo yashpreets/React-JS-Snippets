@@ -3,11 +3,11 @@ import './../css/AdminDashboard.css';
 import './../css/merchantList.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import DataTable from './DataTable.js';
-import fetch from 'cross-fetch';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as RoasterActions from '../actions/RoasterActions';
+import ActionList from '../actions/ActionList';
 
 var Loader = require('react-loader');
 var config = require('./../common/config.js');
@@ -42,42 +42,14 @@ class Roaster extends Component {
 
 	//Called before Rendering
 	componentWillMount(){
-		console.log("mount called for roaster");
-        let authorization = "Basic RUtBUlQ2OkVLQVJUNg==";
-        this.makeFetchcall(authorization,'');
+	    let authorization = "Basic RUtBUlQ2OkVLQVJUNg==";
+        let payload = {authorization:authorization,urlWithParams:fetchRoasterUrl,nextAction: this.props.actions.RoasterActions};
+        this.props.actions.RoasterActions({type:ActionList.FETCH_WEEKLY_ROASTER_DATA,payload:payload});
 	}
 
 	//Called When Component is Destroyed
 	componentWillUnmount(){
 		console.log("destroyed roaster");
-	}
-
-	makeFetchcall(authorization , urlParams){
-        let self = this;
-        let requestOptions = {
-            url: fetchRoasterUrl+urlParams,
-            options: {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'authorization': authorization
-                }
-            }
-        }
-        // Api call to Backend Server
-        fetch(requestOptions.url,requestOptions.options)
-            .then(function(response) {
-                if (response.status >= 400) {
-                    throw new Error("Bad response from server"); // show error message dialog instead of error.
-                }
-                return response.json();
-            }).then(function(data) {
-				console.log(data);
-				//Currently not using the response from the server,loading required json from file
-				let columns = self.filterResponseToCreateColumns(roasterData);
-				self.props.actions.RoasterActions({type:'roasterDataLoaded',dashboardData:roasterData,columns:columns,loaded:true});
-        });
 	}
 
 	filterResponseToCreateColumns(response){
@@ -100,8 +72,7 @@ class Roaster extends Component {
 	}
 
 	render(){
-	    console.log("render for roaster");
-		return (
+	    return (
 			<div className="adminDashboard">
 				<Loader loaded={this.props.RoasterActionsReducer.loaded}>
 					<div className="pagination-div">
@@ -115,8 +86,7 @@ class Roaster extends Component {
 };
 
 function mapStateToProps(state, props) {
-	console.log("state loaded for Roaster");
-    return {
+	return {
         RoasterActionsReducer: state.RoasterActionsReducer
     };
 }

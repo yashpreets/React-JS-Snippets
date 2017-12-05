@@ -4,14 +4,14 @@ let defaultState = {
     loaded:false,
 };
 export const RoasterActionsReducer = (state = defaultState, action) => {
-    //console.log("Roaster Reducer Called" ,action);
     switch(action.type){
-        case 'DASHBOARD_DATA_FETCHED' :
+        case 'WEEKLY_ROASTER_SUCCESS' :
             return Object.assign({}, state, {
                 dashboardData: action.dashboardData,
                 columns:action.columns,
                 loaded:action.loaded,
             });
+        case 'WEEKLY_ROASTER_FAILED':
         default:
             return state;
     }

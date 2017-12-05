@@ -1,5 +1,4 @@
 export const showTab = text => {
-	console.log('show tab:', text);
 	switch (text){
 		 case "roaster":
 			  return {
