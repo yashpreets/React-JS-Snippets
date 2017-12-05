@@ -8,7 +8,11 @@ export const showTab = text => {
 	    case "status":
 	    	  return {
 	    		type: 'SHOW_STATUS_TAB',
-	  		}
+	  		},
+        case "dummy":
+            return {
+                type: 'DUMMY',
+            },
 	    default:
 	    	  return {
 	    		type: 'SHOW_ROASTER_TAB',

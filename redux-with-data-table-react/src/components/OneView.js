@@ -20,7 +20,8 @@ class OneView extends Component {
 				<ul>
 					<a onClick= {(e) => this.onTabClick(e,"roaster")} className="pointer" > Roaster </a>
 					<a onClick= {(e) => this.onTabClick(e,"status")} className="pointer" > Status </a>
-				</ul>
+                    <a onClick= {(e) => this.onTabClick(e,"dummy")} className="pointer" > Dummy </a>
+                </ul>
 				<br/><br/><br/>
 				{this.tabField}
 			</div>
