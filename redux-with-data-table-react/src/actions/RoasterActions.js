@@ -27,6 +27,11 @@ export const weeklyRoasterFailed = function (data) {
     }
 }
 
+export const unsetRoasterState = function () {
+    return {
+        type: ActionList.UNSET_ROASTER_STATE
+    }
+}
 
 function makeFetchcall(payload){
     let requestOptions = {
@@ -56,7 +61,7 @@ function makeFetchcall(payload){
 
 function filterResponseToCreateColumns(response){
     let columns = {"employeeName":"Employee"};
-    if(response[0] != undefined){
+    if(response[0] !== undefined){
         let target = response[0];
         for(var i in target){
             if (target.hasOwnProperty(i)) {

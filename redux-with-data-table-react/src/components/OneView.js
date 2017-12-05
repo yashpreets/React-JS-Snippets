@@ -15,7 +15,7 @@ class OneView extends Component {
 		this.props.actions.showTab(value);
 	}
 	render(){
-		this.tabField = (this.props.oneViewTabChange.oneViewtab == "status")?<Status/>:<Roaster/>;
+		this.tabField = (this.props.oneViewTabChange.oneViewtab === "status")?<Status/>:<Roaster/>;
 		return(<div>
 				<ul>
 					<a onClick= {(e) => this.onTabClick(e,"roaster")} className="pointer" > Roaster </a>

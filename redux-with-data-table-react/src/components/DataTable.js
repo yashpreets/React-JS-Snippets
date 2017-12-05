@@ -1,4 +1,5 @@
-import React, {Component,PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -9,10 +10,8 @@ const exportButtonStyle = {
     marginLeft:'25px',
 }
 
-class DataTable extends React.Component {
-	constructor(props){
-		super(props);
-	}
+class DataTable extends Component {
+
     componentWillMount(){
           this.datatableOptions = {
             page: 1,  // which page you want to show as default
@@ -67,21 +66,21 @@ class DataTable extends React.Component {
     }
 
     render(){
-    	if(this.props.dashboardData == undefined || this.props.dashboardData == '' || this.props.dashboardData.length == 0){
+    	if(this.props.dashboardData === undefined || this.props.dashboardData === '' || this.props.dashboardData.length === 0){
             return (<div>Unable to fetch</div>);
         }
         let columnList = [];
         let cnt = 0;
     	for(var key in this.props.column){
             let hidden = false;
-            if(this.props.hiddenColumn == key){
+            if(this.props.hiddenColumn === key){
                 hidden = true;
             }
             let width = "100";
-            if(this.props.width != undefined && this.props.width[key] != undefined){
+            if(this.props.width !== undefined && this.props.width[key] !== undefined){
                  width = this.props.width[key];
             }
-            if(this.props.keyIndex == cnt) {
+            if(parseInt(this.props.keyIndex,10) === cnt) {
                 columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } dataFormat={this.colClick.bind(this)} width={width} dataSort={ this.props.dataSort } hidden = {hidden} dataField={key} isKey key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
             }else{
                 columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } dataFormat={this.colClick.bind(this)} width={width} dataSort={ this.props.dataSort } hidden = {hidden} dataField={key} key={cnt}>{this.props.column[key]}</TableHeaderColumn>);

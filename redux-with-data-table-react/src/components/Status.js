@@ -3,14 +3,8 @@ import './../css/AdminDashboard.css';
 import './../css/merchantList.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import DataTable from './DataTable.js';
-var commonFunctions = require('./../common/commonFunctions.js');
-var merchantList = require('../testJson/merchantList.js');
 var roasterList = require('../testJson/roasterData.js');
 var Loader = require('react-loader');
-
-var getActions = commonFunctions.getActions();
-var constants = commonFunctions.constants();
-var errorMessages = commonFunctions.errorMessages();
 var roasterData = roasterList.getStatusData();
 
 function onRowSelect(){
@@ -30,38 +24,30 @@ class Status extends Component {
   		super(props);
   		this.state={
 		  dashboardData:'',
-		  loaded:false,
+		  loaded:true,
 		  showNotification:false,
 		  loadCounter:0
 		}
  	};
 
- 	startLoader(){
- 		this.state.loaded = false;
-	};
-	stopLoader(){
-		this.state.loaded = true;
-	};
 	showAlert(message){
  		this.setState({notificationMessage:message,showNotification:true});
  	};
 
 	fetchDashboardData(){
 		//add server call instead
-		this.stopLoader();
 		let serverResponse = roasterData;
 		this.setState({dashboardData:serverResponse});
 	}
 
 	componentDidMount(){
-		this.stopLoader();
 		let serverResponse = roasterData;
 		this.setState({dashboardData:serverResponse});
 	}
 
 	render(){
 		let columns = {"employeeName":"Employee"};
-		if(this.state.dashboardData[0] != undefined){
+		if(this.state.dashboardData[0] !== undefined){
 			let target = this.state.dashboardData[0];
 			for(var i in target){
 				if (target.hasOwnProperty(i)) {

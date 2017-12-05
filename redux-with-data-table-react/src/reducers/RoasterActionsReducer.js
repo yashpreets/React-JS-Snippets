@@ -1,17 +1,22 @@
+import ActionList from '../actions/ActionList';
 let defaultState = {
-    dashboardData: "",
-    columns:"",
-    loaded:false,
+
 };
 export const RoasterActionsReducer = (state = defaultState, action) => {
     switch(action.type){
-        case 'WEEKLY_ROASTER_SUCCESS' :
+        case ActionList.WEEKLY_ROASTER_SUCCESS :
             return Object.assign({}, state, {
                 dashboardData: action.dashboardData,
                 columns:action.columns,
                 loaded:action.loaded,
             });
-        case 'WEEKLY_ROASTER_FAILED':
+        case ActionList.UNSET_ROASTER_STATE:
+            return Object.assign({}, state, {
+                dashboardData: '',
+                columns:'',
+                loaded:false
+            });
+        case ActionList.WEEKLY_ROASTER_FAILED:
         default:
             return state;
     }

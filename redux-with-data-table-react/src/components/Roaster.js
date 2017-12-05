@@ -46,12 +46,12 @@ class Roaster extends Component {
 
 	//Called When Component is Destroyed
 	componentWillUnmount(){
-		console.log("destroyed roaster");
+        this.props.actions.unsetRoasterState();
 	}
 
 	filterResponseToCreateColumns(response){
         let columns = {"employeeName":"Employee"};
-        if(response[0] != undefined){
+        if(response[0] !== undefined){
             let target = response[0];
             for(var i in target){
                 if (target.hasOwnProperty(i)) {
