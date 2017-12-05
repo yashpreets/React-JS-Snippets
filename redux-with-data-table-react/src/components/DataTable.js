@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component,PropTypes} from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -14,31 +14,10 @@ class DataTable extends React.Component {
 		super(props);
 	}
 
-	componentDidMount(){
-		let showActionButton = (this.props.showActionButton == undefined)?0:this.props.showActionButton;
-        let showExportOption = (this.props.showExportOption == undefined || this.props.showExportOption == 0 )?false:true;
-        let sizePerPage = (this.props.sizePerPage == undefined || this.props.sizePerPage == 0 )?10:this.props.sizePerPage;
-        let sortingOrder = (this.props.sortingOrder == undefined || this.props.sortingOrder == "desc")?"desc":"asc";
-        this.colClickHandler = function(){}
-        this.rowClickHandler = function(){}
-        this.rowActionButtonFunction = function(){}
-        if(this.props.clickAction){
-            this.rowActionButtonFunction = this.props.clickAction;
-        }
-        if(this.props.rowClickHandler){
-            this.rowClickHandler = this.props.rowClickHandler;
-        }
-        if(this.props.colClickHandler){
-        	this.colClickHandler = this.props.colClickHandler;
-        }
-	}
-	
-	componentWillReceiveProps(newProps){
-    }
     buttonFormatter(cell, row){
         return (<label>
             <button type="button"
-                    onClick={() => {this.rowActionButtonFunction(row)}}
+                    onClick={() => {this.props.clickAction(row)}}
                     className="bbtn btn-primary btn-sm">
                 View/Edit
             </button>
@@ -55,7 +34,7 @@ class DataTable extends React.Component {
 
     colClick(cell, row){
         return (
-            <label onClick={() => {this.colClickHandler(cell)}} className="pointer">
+            <label onClick={() => {this.props.colClickHandler(cell)}} className="pointer">
                 {cell}
         </label>) ;
     }
@@ -66,7 +45,7 @@ class DataTable extends React.Component {
             sizePerPageList: [ {
                 text: '10', value: 10
             } ], // you can change the dropdown list for size per page
-            sizePerPage: this.sizePerPage,  // which size per page you want to locate as default
+            sizePerPage: this.props.sizePerPage,  // which size per page you want to locate as default
             pageStartIndex: 1, // where to start counting the pages
             paginationSize: 3,  // the pagination bar size.
             prePage: 'Prev', // Previous page button text
@@ -84,8 +63,8 @@ class DataTable extends React.Component {
             withFirstAndLast: true,
             exportCSVBtn: this.createCustomExportCSVButton,
             defaultSortName: this.props.defaultSortColumn,
-            defaultSortOrder: this.sortingOrder,
-            //onRowClick: this.rowClickHandler,
+            defaultSortOrder: this.props.sortingOrder,
+            //onRowClick: this.props.rowClickHandler,
         };
     	if(this.props.dashboardData == undefined || this.props.dashboardData == '' || this.props.dashboardData.length == 0){
             return (<div>Unable to fetch</div>);
@@ -108,7 +87,7 @@ class DataTable extends React.Component {
             }
             cnt++;
         }
-        if(this.props.showActionButton == 1){
+        if(this.props.showActionButton === true){
             columnList.push(<TableHeaderColumn width={'22'} dataField= "button" key="buttonClick" dataFormat={this.buttonFormatter.bind(this)} >Action</TableHeaderColumn>);
         }
     	return (
@@ -118,5 +97,25 @@ class DataTable extends React.Component {
         );
     }
 }
+
+DataTable.defaultProps = {
+    showActionButton : false,
+    showExportOption : false,
+    sizePerPage: 10,
+    sortingOrder: "desc",
+    clickAction: () => {},
+    rowClickHandler: () => {},
+    colClickHandler:() => {}
+};
+
+DataTable.propTypes = {
+    showActionButton : PropTypes.bool,
+    showExportOption : PropTypes.bool,
+    sizePerPage: PropTypes.number,
+    sortingOrder: PropTypes.string,
+    clickAction: PropTypes.func,
+    rowClickHandler: PropTypes.func,
+    colClickHandler: PropTypes.func
+};
 
 export default DataTable;
