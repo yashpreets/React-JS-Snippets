@@ -7,7 +7,6 @@ import DataTable from './DataTable.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as RoasterActions from '../actions/RoasterActions';
-import ActionList from '../actions/ActionList';
 
 var Loader = require('react-loader');
 var config = require('./../common/config.js');
@@ -43,8 +42,9 @@ class Roaster extends Component {
 	//Called before Rendering
 	componentWillMount(){
 	    let authorization = "Basic RUtBUlQ2OkVLQVJUNg==";
-        let payload = {authorization:authorization,urlWithParams:fetchRoasterUrl,nextAction: this.props.actions.RoasterActions};
-        this.props.actions.RoasterActions({type:ActionList.FETCH_WEEKLY_ROASTER_DATA,payload:payload});
+	    let actions = this.props.actions;
+        let payload = {authorization:authorization,urlWithParams:fetchRoasterUrl,successHandler:actions.weeklyRoasterSuccess,failureHandler:actions.weeklyRoasterFailed};
+        actions.fetchWeeklyRoasterData(payload);
 	}
 
 	//Called When Component is Destroyed

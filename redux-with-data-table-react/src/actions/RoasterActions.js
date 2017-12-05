@@ -2,31 +2,31 @@ import ActionList from './ActionList';
 var roasterList = require('../testJson/roasterData.js');
 var roasterData = roasterList.getRoasterData();
 
-export const RoasterActions = data => {
-    switch (data.type){
-        case ActionList.FETCH_WEEKLY_ROASTER_DATA:
-            makeFetchcall(data.payload);
-            return {
-                type: ActionList.FETCH_WEEKLY_ROASTER_DATA,
-            }
-        case ActionList.WEEKLY_ROASTER_SUCCESS:
-            return {
-                type: ActionList.WEEKLY_ROASTER_SUCCESS,
-                dashboardData: data.dashboardData,
-                columns: data.columns,
-                loaded: data.loaded
-            }
-        case ActionList.WEEKLY_ROASTER_FAILED :
-            return {
-                type: ActionList.WEEKLY_ROASTER_FAILED
-            }
-        default:
-            return {
-                type: ActionList.FETCH_WEEKLY_ROASTER_DATA,
-            }
-    }
+export const DefaultAction = data => {
+    return {}
 };
-export default RoasterActions;
+export const fetchWeeklyRoasterData = function(payload){
+    makeFetchcall(payload);
+    return {
+        type: ActionList.FETCH_WEEKLY_ROASTER_DATA,
+    }
+}
+
+export const weeklyRoasterSuccess = function(data){
+    return {
+        type: ActionList.WEEKLY_ROASTER_SUCCESS,
+        dashboardData: data.dashboardData,
+        columns: data.columns,
+        loaded: data.loaded
+    }
+}
+
+export const weeklyRoasterFailed = function (data) {
+    return {
+        type: ActionList.WEEKLY_ROASTER_FAILED
+    }
+}
+
 
 function makeFetchcall(payload){
     let requestOptions = {
@@ -50,7 +50,7 @@ function makeFetchcall(payload){
         }).then(function(data) {
         //Currently not using the response from the server,loading required json from file
         let columns = filterResponseToCreateColumns(roasterData);
-        payload.nextAction({type: ActionList.WEEKLY_ROASTER_SUCCESS,dashboardData:roasterData,columns:columns,loaded:true});
+        payload.successHandler({dashboardData:roasterData,columns:columns,loaded:true});
     });
 }
 
@@ -67,3 +67,5 @@ function filterResponseToCreateColumns(response){
     }
     return columns;
 }
+
+export default DefaultAction;
