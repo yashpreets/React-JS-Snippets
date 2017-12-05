@@ -35,9 +35,21 @@ class Roaster extends Component {
 		}
  	};
 
+ 	//Called After Rendering
 	componentDidMount(){
+
+	}
+
+	//Called before Rendering
+	componentWillMount(){
+		console.log("mount called for roaster");
         let authorization = "Basic RUtBUlQ2OkVLQVJUNg==";
         this.makeFetchcall(authorization,'');
+	}
+
+	//Called When Component is Destroyed
+	componentWillUnmount(){
+		console.log("destroyed roaster");
 	}
 
 	makeFetchcall(authorization , urlParams){
@@ -88,6 +100,7 @@ class Roaster extends Component {
 	}
 
 	render(){
+	    console.log("render for roaster");
 		return (
 			<div className="adminDashboard">
 				<Loader loaded={this.props.RoasterActionsReducer.loaded}>
@@ -102,6 +115,7 @@ class Roaster extends Component {
 };
 
 function mapStateToProps(state, props) {
+	console.log("state loaded for Roaster");
     return {
         RoasterActionsReducer: state.RoasterActionsReducer
     };
