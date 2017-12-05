@@ -13,7 +13,34 @@ class DataTable extends React.Component {
 	constructor(props){
 		super(props);
 	}
-
+    componentWillMount(){
+          this.datatableOptions = {
+            page: 1,  // which page you want to show as default
+            sizePerPageList: [ {
+                text: '10', value: 10
+            } ], // you can change the dropdown list for size per page
+            sizePerPage: this.props.sizePerPage,  // which size per page you want to locate as default
+            pageStartIndex: 1, // where to start counting the pages
+            paginationSize: 3,  // the pagination bar size.
+            prePage: 'Prev', // Previous page button text
+            nextPage: 'Next', // Next page button text
+            firstPage: 'First', // First page button text
+            lastPage: 'Last', // Last page button text
+            prePageTitle: 'Go to previous',
+            nextPageTitle: 'Go to next',
+            firstPageTitle: 'Go to first',
+            lastPageTitle: 'Go to Last',
+            //paginationShowsTotal: this.renderShowsTotal,
+            paginationPosition: 'bottom',
+            clearSearch: true,
+            alwaysShowAllBtns: true,
+            withFirstAndLast: true,
+            exportCSVBtn: this.createCustomExportCSVButton,
+            defaultSortName: this.props.defaultSortColumn,
+            defaultSortOrder: this.props.sortingOrder,
+            //onRowClick: this.props.rowClickHandler,
+        };
+    }
     buttonFormatter(cell, row){
         return (<label>
             <button type="button"
@@ -40,32 +67,6 @@ class DataTable extends React.Component {
     }
 
     render(){
-    	const options = {
-            page: 1,  // which page you want to show as default
-            sizePerPageList: [ {
-                text: '10', value: 10
-            } ], // you can change the dropdown list for size per page
-            sizePerPage: this.props.sizePerPage,  // which size per page you want to locate as default
-            pageStartIndex: 1, // where to start counting the pages
-            paginationSize: 3,  // the pagination bar size.
-            prePage: 'Prev', // Previous page button text
-            nextPage: 'Next', // Next page button text
-            firstPage: 'First', // First page button text
-            lastPage: 'Last', // Last page button text
-            prePageTitle: 'Go to previous',
-            nextPageTitle: 'Go to next', 
-            firstPageTitle: 'Go to first', 
-            lastPageTitle: 'Go to Last', 
-            //paginationShowsTotal: this.renderShowsTotal, 
-            paginationPosition: 'bottom',  
-            clearSearch: true,
-            alwaysShowAllBtns: true,
-            withFirstAndLast: true,
-            exportCSVBtn: this.createCustomExportCSVButton,
-            defaultSortName: this.props.defaultSortColumn,
-            defaultSortOrder: this.props.sortingOrder,
-            //onRowClick: this.props.rowClickHandler,
-        };
     	if(this.props.dashboardData == undefined || this.props.dashboardData == '' || this.props.dashboardData.length == 0){
             return (<div>Unable to fetch</div>);
         }
@@ -91,7 +92,7 @@ class DataTable extends React.Component {
             columnList.push(<TableHeaderColumn width={'22'} dataField= "button" key="buttonClick" dataFormat={this.buttonFormatter.bind(this)} >Action</TableHeaderColumn>);
         }
     	return (
-    			<BootstrapTable data={ this.props.dashboardData }  pagination={ true } ignoreSinglePage={true} options={ options } search = {this.props.showSearchBar} exportCSV = {this.props.showExportOption}>
+    			<BootstrapTable data={ this.props.dashboardData }  pagination={ true } ignoreSinglePage={true} options={ this.datatableOptions } search = {this.props.showSearchBar} exportCSV = {this.props.showExportOption}>
                 	{columnList}
         		</BootstrapTable>
         );
