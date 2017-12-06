@@ -1,6 +1,4 @@
 import ActionList from './ActionList';
-var roasterList = require('../testJson/roasterData.js');
-var roasterData = roasterList.getRoasterData();
 
 export const DefaultAction = data => {
     return {}
@@ -37,12 +35,13 @@ function makeFetchcall(payload){
     let requestOptions = {
         url: payload.urlWithParams,
         options: {
-            method: 'GET',
+            method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'authorization': payload.authorization
-            }
+            },
+            body: JSON.stringify(payload.requestPayload)
         }
     }
     // Api call to Backend Server
@@ -53,24 +52,40 @@ function makeFetchcall(payload){
             }
             return response.json();
         }).then(function(data) {
-        //Currently not using the response from the server,loading required json from file
-        let columns = filterResponseToCreateColumns(roasterData);
-        payload.successHandler({dashboardData:roasterData,columns:columns,loaded:true});
+        let filteredData = getFilteredResponse(data.payload);
+        payload.successHandler({dashboardData:filteredData[1],columns:filteredData[0],loaded:true});
     });
 }
 
-function filterResponseToCreateColumns(response){
-    let columns = {"employeeName":"Employee"};
-    if(response[0] !== undefined){
-        let target = response[0];
-        for(var i in target){
-            if (target.hasOwnProperty(i)) {
-                let key = i;
-                columns[key] = key;
+function getFilteredResponse(payload){
+    let entityIdMap = {1:"yash1"};
+    let shiftMapping = {1:"8-12","WeeklyOff":"WeeklyOff"};
+    let data = []
+    for(var entityId in payload){
+        if (payload.hasOwnProperty(entityId)) {
+            let entityName = entityIdMap[entityId];
+            let obj = { "employeeName" : entityName };
+            for(var i in payload[entityId]){
+                if(payload[entityId].hasOwnProperty(i)){
+                    let key = payload[entityId][i].dayOfWeek + " " + payload[entityId][i].date;
+                    let value = shiftMapping[payload[entityId][i].status];
+                    obj[key] = value;
+                }
             }
+            data.push(obj);
         }
     }
-    return columns;
+    let columns = {};
+    if(data[0] !== undefined){
+         let target = data[0];
+         for(var j in target){
+             if (target.hasOwnProperty(j)) {
+                 let key = j;
+                 columns[key] = key;
+             }
+         }
+    }
+    return [columns,data];
 }
 
 export default DefaultAction;

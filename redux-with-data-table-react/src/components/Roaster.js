@@ -40,7 +40,7 @@ class Roaster extends Component {
 	componentWillMount(){
 	    let authorization = "Basic RUtBUlQ2OkVLQVJUNg==";
 	    let actions = this.props.actions;
-        let payload = {authorization:authorization,urlWithParams:fetchRoasterUrl,successHandler:actions.weeklyRoasterSuccess,failureHandler:actions.weeklyRoasterFailed};
+        let payload = {authorization:authorization,urlWithParams:fetchRoasterUrl,successHandler:actions.weeklyRoasterSuccess,failureHandler:actions.weeklyRoasterFailed,requestPayload:this.props.requestPayload};
         actions.fetchWeeklyRoasterData(payload);
 	}
 
