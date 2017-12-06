@@ -126,6 +126,14 @@ exports.deleteSession = function() {
     sessionStorage.clear();
 };
 
+exports.setInStore = function(key , value){
+	localStorage.setItem(key , value);
+};
+
+exports.getFromStore = function (key) {
+	return localStorage.getItem(key);
+}
+
 exports.getBasicAuthorization = function(username,password) {
     var encodedData = window.btoa(username+password);
     return 'Basic '+encodedData;

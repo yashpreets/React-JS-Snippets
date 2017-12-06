@@ -1,4 +1,5 @@
 import ActionList from './ActionList';
+import commonFunctions from './../common/commonFunctions';
 
 export const DefaultAction = data => {
     return {}
@@ -59,7 +60,8 @@ function makeFetchcall(payload){
 
 function getFilteredResponse(payload){
     let entityIdMap = {1:"yash1"};
-    let shiftMapping = {1:"8-12","WeeklyOff":"WeeklyOff"};
+    let shiftMapping = JSON.parse(commonFunctions.getFromStore("shiftMapping"));
+    shiftMapping["WeeklyOff"] = "WeeklyOff";
     let data = []
     for(var entityId in payload){
         if (payload.hasOwnProperty(entityId)) {
@@ -68,7 +70,8 @@ function getFilteredResponse(payload){
             for(var i in payload[entityId]){
                 if(payload[entityId].hasOwnProperty(i)){
                     let key = payload[entityId][i].dayOfWeek + " " + payload[entityId][i].date;
-                    let value = shiftMapping[payload[entityId][i].status];
+                    let status = (payload[entityId][i].status).toString();
+                    let value = shiftMapping[status];
                     obj[key] = value;
                 }
             }
