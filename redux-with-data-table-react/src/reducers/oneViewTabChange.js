@@ -11,6 +11,10 @@ export const oneViewTabChange = (state = defaultState, action) => {
 			return Object.assign({}, state, {
         		oneViewtab: "status"
      	 	});
+        case 'DUMMY' :
+            return Object.assign({}, state, {
+                oneViewtab: "dummy"
+            });
 		default:
 			return state;
 	}

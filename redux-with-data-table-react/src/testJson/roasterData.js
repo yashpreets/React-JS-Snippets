@@ -28,6 +28,95 @@ exports.getRoasterData = function(){
             "Friday 2017-12-01":"8-16",
             "Saturday 2017-12-02":"8-16",
             "Sunday 2017-12-03":"Weekly off"
+        },
+        {
+            "employeeName":"yash 18",
+            "Monday 2017-11-27":"8-16",
+            "Tuesday 2017-11-28":"8-16",
+            "Wednesday 2017-11-29":"8-16",
+            "Thursday 2017-11-30":"8-16",
+            "Friday 2017-12-01":"8-16",
+            "Saturday 2017-12-02":"8-16",
+            "Sunday 2017-12-03":"Weekly off"
+        },
+        {
+            "employeeName":"yash 15",
+            "Monday 2017-11-27":"8-16",
+            "Tuesday 2017-11-28":"8-16",
+            "Wednesday 2017-11-29":"8-16",
+            "Thursday 2017-11-30":"8-16",
+            "Friday 2017-12-01":"8-16",
+            "Saturday 2017-12-02":"8-16",
+            "Sunday 2017-12-03":"Weekly off"
+        },
+        {
+            "employeeName":"yash 13",
+            "Monday 2017-11-27":"8-15",
+            "Tuesday 2017-11-28":"8-15",
+            "Wednesday 2017-11-29":"8-16",
+            "Thursday 2017-11-30":"8-16",
+            "Friday 2017-12-01":"8-16",
+            "Saturday 2017-12-02":"8-16",
+            "Sunday 2017-12-03":"Weekly off"
+        },{
+            "employeeName":"yash 28",
+            "Monday 2017-11-27":"8-16",
+            "Tuesday 2017-11-28":"8-16",
+            "Wednesday 2017-11-29":"8-16",
+            "Thursday 2017-11-30":"8-16",
+            "Friday 2017-12-01":"8-16",
+            "Saturday 2017-12-02":"8-16",
+            "Sunday 2017-12-03":"Weekly off"
+        },
+        {
+            "employeeName":"yash 25",
+            "Monday 2017-11-27":"8-16",
+            "Tuesday 2017-11-28":"8-16",
+            "Wednesday 2017-11-29":"8-16",
+            "Thursday 2017-11-30":"8-16",
+            "Friday 2017-12-01":"8-16",
+            "Saturday 2017-12-02":"8-16",
+            "Sunday 2017-12-03":"Weekly off"
+        },
+        {
+            "employeeName":"yash 23",
+            "Monday 2017-11-27":"8-15",
+            "Tuesday 2017-11-28":"8-15",
+            "Wednesday 2017-11-29":"8-16",
+            "Thursday 2017-11-30":"8-16",
+            "Friday 2017-12-01":"8-16",
+            "Saturday 2017-12-02":"8-16",
+            "Sunday 2017-12-03":"Weekly off"
+        },
+        {
+            "employeeName":"yash 19",
+            "Monday 2017-11-27":"8-16",
+            "Tuesday 2017-11-28":"8-16",
+            "Wednesday 2017-11-29":"8-16",
+            "Thursday 2017-11-30":"8-16",
+            "Friday 2017-12-01":"8-16",
+            "Saturday 2017-12-02":"8-16",
+            "Sunday 2017-12-03":"Weekly off"
+        },
+        {
+            "employeeName":"yash 17",
+            "Monday 2017-11-27":"8-16",
+            "Tuesday 2017-11-28":"8-16",
+            "Wednesday 2017-11-29":"8-16",
+            "Thursday 2017-11-30":"8-16",
+            "Friday 2017-12-01":"8-16",
+            "Saturday 2017-12-02":"8-16",
+            "Sunday 2017-12-03":"Weekly off"
+        },
+        {
+            "employeeName":"yash 14",
+            "Monday 2017-11-27":"8-15",
+            "Tuesday 2017-11-28":"8-15",
+            "Wednesday 2017-11-29":"8-16",
+            "Thursday 2017-11-30":"8-16",
+            "Friday 2017-12-01":"8-16",
+            "Saturday 2017-12-02":"8-16",
+            "Sunday 2017-12-03":"Weekly off"
         }]
 	return obj;
 }

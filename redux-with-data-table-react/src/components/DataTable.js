@@ -62,13 +62,11 @@ class DataTable extends React.Component {
 
     render(){
     	const options = {
+
             page: 1,  // which page you want to show as default
-            sizePerPageList: [ {
-                text: '10', value: 10
-            } ], // you can change the dropdown list for size per page
-            sizePerPage: this.sizePerPage,  // which size per page you want to locate as default
+                sizePerPage: 10,  // which size per page you want to locate as default
             pageStartIndex: 1, // where to start counting the pages
-            paginationSize: 3,  // the pagination bar size.
+            paginationSize: 10,  // the pagination bar size.
             prePage: 'Prev', // Previous page button text
             nextPage: 'Next', // Next page button text
             firstPage: 'First', // First page button text
@@ -102,9 +100,9 @@ class DataTable extends React.Component {
                  width = this.props.width[key];
             }
             if(this.props.keyIndex == cnt) {
-                columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } dataFormat={this.colClick.bind(this)} width={width} dataSort={ this.props.dataSort } hidden = {hidden} dataField={key} isKey key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
+                columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } dataFormat={this.colClick.bind(this)} width={width} dataAlign={'center'} dataSort={ this.props.dataSort } hidden = {hidden} dataField={key} isKey key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
             }else{
-                columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } dataFormat={this.colClick.bind(this)} width={width} dataSort={ this.props.dataSort } hidden = {hidden} dataField={key} key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
+                columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } dataFormat={this.colClick.bind(this)} width={width} dataAlign={'center'} dataSort={ this.props.dataSort } hidden = {hidden} dataField={key} key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
             }
             cnt++;
         }
@@ -112,7 +110,7 @@ class DataTable extends React.Component {
             columnList.push(<TableHeaderColumn width={'22'} dataField= "button" key="buttonClick" dataFormat={this.buttonFormatter.bind(this)} >Action</TableHeaderColumn>);
         }
     	return (
-    			<BootstrapTable data={ this.props.dashboardData }  pagination={ true } ignoreSinglePage={true} options={ options } search = {true} exportCSV = {true}>
+    			<BootstrapTable data={ this.props.dashboardData } search = {true}  pagination={ true } options={ options} keyBoardNav >
                 	{columnList}
         		</BootstrapTable>
         );

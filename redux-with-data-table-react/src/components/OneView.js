@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Roaster from './Roaster.js';
+import Dummy from './Dummy.js';
 import Status from './Status.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -16,11 +17,12 @@ class OneView extends Component {
 	}
 	render(){
 		this.tabField = (this.props.oneViewTabChange.oneViewtab == "status")?<Status/>:<Roaster/>;
+
 		return(<div>
 				<ul>
 					<a onClick= {(e) => this.onTabClick(e,"roaster")} className="pointer" > Roaster </a>
 					<a onClick= {(e) => this.onTabClick(e,"status")} className="pointer" > Status </a>
-                    <a onClick= {(e) => this.onTabClick(e,"dummy")} className="pointer" > Dummy </a>
+           //         <a onClick= {(e) => this.onTabClick(e,"dummy")} className="pointer" > Dummy </a>
                 </ul>
 				<br/><br/><br/>
 				{this.tabField}
