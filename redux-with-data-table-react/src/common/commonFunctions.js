@@ -73,7 +73,8 @@ exports.getCurrentDate = function(){
 	 if(mm<10){ 
 	 	mm='0'+mm; 
 	 } 
-	 var today = yyyy+'-'+mm+'-'+dd;
+	 //var today = yyyy+'-'+mm+'-'+dd;
+	 var today = dd+'/'+mm+'/'+yyyy;
 	 return today;
 };
 
@@ -129,3 +130,4 @@ exports.getBasicAuthorization = function(username,password) {
     var encodedData = window.btoa(username+password);
     return 'Basic '+encodedData;
 }
+

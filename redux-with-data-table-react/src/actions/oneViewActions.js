@@ -1,5 +1,4 @@
 export const showTab = text => {
-	console.log('show tab:', text);
 	switch (text){
 		 case "roaster":
 			  return {
@@ -9,10 +8,6 @@ export const showTab = text => {
 	    	  return {
 	    		type: 'SHOW_STATUS_TAB',
 	  		}
-        case "dummy":
-            return {
-                type: 'DUMMY',
-            }
 	    default:
 	    	  return {
 	    		type: 'SHOW_ROASTER_TAB',

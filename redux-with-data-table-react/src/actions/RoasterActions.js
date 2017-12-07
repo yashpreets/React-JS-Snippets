@@ -1,21 +1,91 @@
-export const RoasterActions = data => {
-    //console.log('roaster actions:', data);
-    switch (data.type){
-        case "fetchRoasterData":
-            return {
-                type: 'FETCH_DASHBOARD_DATA',
-            }
-        case "roasterDataLoaded":
-            return {
-                type: 'DASHBOARD_DATA_FETCHED',
-                dashboardData: data.dashboardData,
-                columns: data.columns,
-                loaded: data.loaded
-            }
-        default:
-            return {
-                type: 'FETCH_DASHBOARD_DATA',
-            }
-    }
+import ActionList from './ActionList';
+
+export const DefaultAction = data => {
+    return {}
 };
-export default RoasterActions;
+export const fetchWeeklyRoasterData = function(payload){
+    makeFetchcall(payload);
+    return {
+        type: ActionList.FETCH_WEEKLY_ROASTER_DATA,
+    }
+}
+
+export const weeklyRoasterSuccess = function(data){
+    return {
+        type: ActionList.WEEKLY_ROASTER_SUCCESS,
+        dashboardData: data.dashboardData,
+        columns: data.columns,
+        loaded: data.loaded
+    }
+}
+
+export const weeklyRoasterFailed = function (data) {
+    return {
+        type: ActionList.WEEKLY_ROASTER_FAILED
+    }
+}
+
+export const unsetRoasterState = function () {
+    return {
+        type: ActionList.UNSET_ROASTER_STATE
+    }
+}
+
+function makeFetchcall(payload){
+    let requestOptions = {
+        url: payload.urlWithParams,
+        options: {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'authorization': payload.authorization
+            },
+            body: JSON.stringify(payload.requestPayload)
+        }
+    }
+    // Api call to Backend Server
+    fetch(requestOptions.url,requestOptions.options)
+        .then(function(response) {
+            if (response.status >= 400) {
+                throw new Error("Bad response from server"); // show error message dialog instead of error.
+            }
+            return response.json();
+        }).then(function(data) {
+        let filteredData = getFilteredResponse(data.payload);
+        payload.successHandler({dashboardData:filteredData[1],columns:filteredData[0],loaded:true});
+    });
+}
+
+function getFilteredResponse(payload){
+    let entityIdMap = {1:"yash1"};
+    let shiftMapping = {1:"8-12","WeeklyOff":"WeeklyOff"};
+    let data = []
+    for(var entityId in payload){
+        if (payload.hasOwnProperty(entityId)) {
+            let entityName = entityIdMap[entityId];
+            let obj = { "employeeName" : entityName };
+            for(var i in payload[entityId]){
+                if(payload[entityId].hasOwnProperty(i)){
+                    let key = payload[entityId][i].dayOfWeek + " " + payload[entityId][i].date;
+                    let value = shiftMapping[payload[entityId][i].status];
+                    obj[key] = value;
+                }
+            }
+            data.push(obj);
+        }
+    }
+    let columns = {};
+    if(data[0] !== undefined){
+         let target = data[0];
+         for(var j in target){
+             if (target.hasOwnProperty(j)) {
+                 let key = j;
+                 columns[key] = key;
+             }
+         }
+    }
+    return [columns,data];
+}
+
+export default DefaultAction;

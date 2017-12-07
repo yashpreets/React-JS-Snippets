@@ -3,17 +3,8 @@ import './../css/AdminDashboard.css';
 import './../css/merchantList.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import DataTable from './DataTable.js';
-var config = require('./../common/config.js');
-var commonFunctions = require('./../common/commonFunctions.js');
-var merchantList = require('../testJson/merchantList.js');
 var roasterList = require('../testJson/roasterData.js');
 var Loader = require('react-loader');
-
-
-var serverBaseUrl = config.config().serverUrl;
-var getActions = commonFunctions.getActions();
-var constants = commonFunctions.constants();
-var errorMessages = commonFunctions.errorMessages();
 var roasterData = roasterList.getStatusData();
 
 function onRowSelect(){
@@ -24,47 +15,38 @@ function onCellClick(cell){
 	console.log(cell);
 }
 
-const columnWidth = {
-
-};
-
 class Status extends Component {
 	constructor(props){
   		super(props);
   		this.state={
 		  dashboardData:'',
-		  loaded:false,
+		  loaded:true,
 		  showNotification:false,
 		  loadCounter:0
 		}
  	};
 
- 	startLoader(){
- 		this.state.loaded = false;
-	};
-	stopLoader(){
-		this.state.loaded = true;
-	};
 	showAlert(message){
  		this.setState({notificationMessage:message,showNotification:true});
  	};
 
+    fetchData(e,data){
+        alert("write code to fetch "+ data);
+    }
 	fetchDashboardData(){
 		//add server call instead
-		this.stopLoader();
 		let serverResponse = roasterData;
 		this.setState({dashboardData:serverResponse});
 	}
 
 	componentDidMount(){
-		this.stopLoader();
 		let serverResponse = roasterData;
 		this.setState({dashboardData:serverResponse});
 	}
 
 	render(){
 		let columns = {"employeeName":"Employee"};
-		if(this.state.dashboardData[0] != undefined){
+		if(this.state.dashboardData[0] !== undefined){
 			let target = this.state.dashboardData[0];
 			for(var i in target){
 				if (target.hasOwnProperty(i)) {
@@ -75,7 +57,12 @@ class Status extends Component {
 			return (
 				<div className="adminDashboard">
 					<Loader loaded={this.state.loaded}>
-						<DataTable dashboardData={this.state.dashboardData} column={columns} keyIndex="1" colClickHandler= {onCellClick} clickAction={onRowSelect} columnWidth={columnWidth}  showSearchBar={true} ></DataTable>
+                            <div className="pagination-div">
+                                <a id="next" className="pagination-button pull-right" href="#" onClick= {(e) => this.fetchData(e,"nextData")} >»</a>
+                                <a id="prev" className="pagination-button pull-right" href="#" onClick= {(e) => this.fetchData(e,"prevData")} >«</a>
+                            </div>
+
+                            <DataTable dashboardData={this.state.dashboardData} column={columns} keyIndex="1" colClickHandler= {onCellClick} clickAction={onRowSelect} ></DataTable>
 					</Loader>
 				</div>);
 		}

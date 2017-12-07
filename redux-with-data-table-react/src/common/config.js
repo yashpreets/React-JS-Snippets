@@ -1,6 +1,5 @@
-exports.config = function(){
-    var application = {};
-    application.serverUrl = "http://localhost:3000";
-    application.fetchRoasterUrl = application.serverUrl + "/tenant/tenantHolidayMapping/all";
-    return application;
-};
+const config = {
+    serverUrl : "http://localhost:3000",
+    fetchRoasterUrl : "http://localhost:3000/roster/rosterWeekly/"
+}
+export default config;

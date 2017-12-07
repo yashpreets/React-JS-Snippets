@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -9,36 +10,36 @@ const exportButtonStyle = {
     marginLeft:'25px',
 }
 
-class DataTable extends React.Component {
-	constructor(props){
-		super(props);
-	}
+class DataTable extends Component {
 
-	componentDidMount(){
-		let showActionButton = (this.props.showActionButton == undefined)?0:this.props.showActionButton;
-        let showExportOption = (this.props.showExportOption == undefined || this.props.showExportOption == 0 )?false:true;
-        let sizePerPage = (this.props.sizePerPage == undefined || this.props.sizePerPage == 0 )?10:this.props.sizePerPage;
-        let sortingOrder = (this.props.sortingOrder == undefined || this.props.sortingOrder == "desc")?"desc":"asc";
-        this.colClickHandler = function(){}
-        this.rowClickHandler = function(){}
-        this.rowActionButtonFunction = function(){}
-        if(this.props.clickAction){
-            this.rowActionButtonFunction = this.props.clickAction;
-        }
-        if(this.props.rowClickHandler){
-            this.rowClickHandler = this.props.rowClickHandler;
-        }
-        if(this.props.colClickHandler){
-        	this.colClickHandler = this.props.colClickHandler;
-        }
-	}
-	
-	componentWillReceiveProps(newProps){
+    componentWillMount(){
+          this.datatableOptions = {
+            page: 1,  // which page you want to show as default
+            sizePerPage: 10,  // which size per page you want to locate as default
+            pageStartIndex: 1, // where to start counting the pages
+            paginationSize: 5,  // the pagination bar size.
+            prePage: 'Prev', // Previous page button text
+            nextPage: 'Next', // Next page button text
+            firstPage: 'First', // First page button text
+            lastPage: 'Last', // Last page button text
+            prePageTitle: 'Go to previous',
+            nextPageTitle: 'Go to next',
+            firstPageTitle: 'Go to first',
+            lastPageTitle: 'Go to Last',
+            paginationPosition: 'bottom',
+            clearSearch: true,
+            alwaysShowAllBtns: true,
+            withFirstAndLast: true,
+            exportCSVBtn: this.createCustomExportCSVButton,
+            defaultSortName: this.props.defaultSortColumn,
+            defaultSortOrder: this.props.sortingOrder,
+            hidden: false,
+        };
     }
     buttonFormatter(cell, row){
         return (<label>
             <button type="button"
-                    onClick={() => {this.rowActionButtonFunction(row)}}
+                    onClick={() => {this.props.clickAction(row)}}
                     className="bbtn btn-primary btn-sm">
                 View/Edit
             </button>
@@ -53,68 +54,63 @@ class DataTable extends React.Component {
         );
      }
 
-    colClick(cell, row){
+    colClick(cell, colheader){
+        console.log(cell,colheader);
         return (
-            <label onClick={() => {this.colClickHandler(cell)}} className="pointer">
+            <label onClick={() => {this.props.colClickHandler(cell,colheader)}} className="pointer">
                 {cell}
         </label>) ;
     }
 
     render(){
-    	const options = {
-
-            page: 1,  // which page you want to show as default
-                sizePerPage: 10,  // which size per page you want to locate as default
-            pageStartIndex: 1, // where to start counting the pages
-            paginationSize: 10,  // the pagination bar size.
-            prePage: 'Prev', // Previous page button text
-            nextPage: 'Next', // Next page button text
-            firstPage: 'First', // First page button text
-            lastPage: 'Last', // Last page button text
-            prePageTitle: 'Go to previous',
-            nextPageTitle: 'Go to next', 
-            firstPageTitle: 'Go to first', 
-            lastPageTitle: 'Go to Last', 
-            //paginationShowsTotal: this.renderShowsTotal, 
-            paginationPosition: 'bottom',  
-            clearSearch: true,
-            alwaysShowAllBtns: true,
-            withFirstAndLast: true,
-            exportCSVBtn: this.createCustomExportCSVButton,
-            defaultSortName: this.props.defaultSortColumn,
-            defaultSortOrder: this.sortingOrder,
-            //onRowClick: this.rowClickHandler,
-        };
-    	if(this.props.dashboardData == undefined || this.props.dashboardData == '' || this.props.dashboardData.length == 0){
+    	if(this.props.dashboardData === undefined || this.props.dashboardData === '' || this.props.dashboardData.length === 0){
             return (<div>Unable to fetch</div>);
         }
         let columnList = [];
         let cnt = 0;
     	for(var key in this.props.column){
-            let hidden = false;
-            if(this.props.hiddenColumn == key){
-                hidden = true;
-            }
-            let width = "100";
-            if(this.props.width != undefined && this.props.width[key] != undefined){
-                 width = this.props.width[key];
-            }
-            if(this.props.keyIndex == cnt) {
-                columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } dataFormat={this.colClick.bind(this)} width={width} dataAlign={'center'} dataSort={ this.props.dataSort } hidden = {hidden} dataField={key} isKey key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
+
+            if(parseInt(this.props.keyIndex,10) === cnt) {
+                columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } dataFormat={(e) => this.colClick(e,this.props.column[key])} width={ this.props.width} dataAlign={ this.props.dataAlign} dataSort={ this.props.dataSort } hidden = { this.props.hidden} dataField={key} isKey key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
             }else{
-                columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } dataFormat={this.colClick.bind(this)} width={width} dataAlign={'center'} dataSort={ this.props.dataSort } hidden = {hidden} dataField={key} key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
+                columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } dataFormat={(e) => this.colClick(e,this.props.column[key])} width={ this.props.width} dataAlign={ this.props.dataAlign} dataSort={ this.props.dataSort } hidden = { this.props.hidden} dataField={key} key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
             }
             cnt++;
         }
-        if(this.props.showActionButton == 1){
+        if(this.props.showActionButton === true){
             columnList.push(<TableHeaderColumn width={'22'} dataField= "button" key="buttonClick" dataFormat={this.buttonFormatter.bind(this)} >Action</TableHeaderColumn>);
         }
     	return (
-    			<BootstrapTable data={ this.props.dashboardData } search = {true}  pagination={ true } options={ options} keyBoardNav >
+    			<BootstrapTable data={ this.props.dashboardData }  pagination={ true } ignoreSinglePage={true} options={ this.datatableOptions } search = {this.props.search} exportCSV = {this.props.showExportOption} selectRow={ this.props.selectRowProp }>
                 	{columnList}
         		</BootstrapTable>
         );
     }
 }
+
+DataTable.defaultProps = {
+    showActionButton : false,
+    showExportOption : false,
+    sizePerPage: 10,
+    sortingOrder: "desc",
+    clickAction: () => {},
+    rowClickHandler: () => {},
+    colClickHandler:() => {},
+    selectRowProp : false,
+    search: true,
+    width: 100,
+    dataAlign: 'center',
+    hidden: false
+};
+
+DataTable.propTypes = {
+    showActionButton : PropTypes.bool,
+    showExportOption : PropTypes.bool,
+    sizePerPage: PropTypes.number,
+    sortingOrder: PropTypes.string,
+    clickAction: PropTypes.func,
+    rowClickHandler: PropTypes.func,
+    colClickHandler: PropTypes.func
+};
 
 export default DataTable;
