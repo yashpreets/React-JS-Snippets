@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import GetApp from 'material-ui/svg-icons/action/get-app';
 
 const exportButtonStyle = {
-    marginLeft:'25px',
+    marginLeft:'25px'
 }
 
 class DataTable extends Component {
