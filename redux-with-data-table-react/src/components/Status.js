@@ -58,11 +58,11 @@ class Status extends Component {
 				<div className="adminDashboard">
 					<Loader loaded={this.state.loaded}>
                             <div className="pagination-div">
-                                <a id="next" className="pagination-button pull-right" href="#" onClick= {(e) => this.fetchData(e,"nextData")} >»</a>
-                                <a id="prev" className="pagination-button pull-right" href="#" onClick= {(e) => this.fetchData(e,"prevData")} >«</a>
+                                <a id="next" className="pagination-button pull-right " href="#" onClick= {(e) => this.fetchData(e,"nextData")} >»</a>
+                                <a id="prev" className="pagination-button pull-right black" href="#" onClick= {(e) => this.fetchData(e,"prevData")} >«</a>
                             </div>
 
-                            <DataTable dashboardData={this.state.dashboardData} column={columns} keyIndex="1" colClickHandler= {onCellClick} clickAction={onRowSelect} ></DataTable>
+                            <DataTable dashboardData={this.state.dashboardData} column={columns} keyIndex="0" colClickHandler= {onCellClick} clickAction={onRowSelect} ></DataTable>
 					</Loader>
 				</div>);
 		}

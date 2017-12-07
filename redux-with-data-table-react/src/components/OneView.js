@@ -4,6 +4,7 @@ import Status from './Status.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as oneViewActions from '../actions/oneViewActions';
+import './../css/Common.css';
 
 class OneView extends Component {
 	constructor(props){
@@ -19,17 +20,29 @@ class OneView extends Component {
 	onTabClick(e,value){
 		this.props.actions.showTab(value);
 	}
-	render(){
-		this.tabField = (this.props.oneViewTabChange.oneViewtab === "status")?<Status requestPayload = {this.requestPayload} />:<Roaster requestPayload = {this.requestPayload}/>;
-		return(<div>
-				<ul>
-					<a onClick= {(e) => this.onTabClick(e,"roaster")} className="pointer" > Roaster </a>
-					<a onClick= {(e) => this.onTabClick(e,"status")} className="pointer" > Status </a>
+
+    render() {
+        this.tabField = (this.props.oneViewTabChange.oneViewtab === "status") ? <Status requestPayload = {this.requestPayload} /> : <Roaster requestPayload = {this.requestPayload}/>;
+        return (<div>
+            <div class="col-sm-2 col-xs-7">
+                <div class="">
+                    <a onClick= {(e) => this.onTabClick(e, "roaster")} className="pointer"> EKART </a> </div>
+                </div>
+
+            <div className="sub-navigation2">
+            <div className="sub-navigation1">
+                <ul>
+                    <a onClick= {(e) => this.onTabClick(e, "roaster")} className="pointer" > Roaster </a>
+                    <a onClick= {(e) => this.onTabClick(e, "status")} className="pointer" > Status </a>
                 </ul>
-				<br/><br/><br/>
+                </div>
+                </div>
+            <br/>
+            <br/>
+            <br/>
 				{this.tabField}
-			</div>
-		);
+        </div>
+        );
 	}
 }
 function mapStateToProps(state, props) {

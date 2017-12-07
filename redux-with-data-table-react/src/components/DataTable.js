@@ -71,9 +71,9 @@ class DataTable extends Component {
     	for(var key in this.props.column){
 
             if(parseInt(this.props.keyIndex,10) === cnt) {
-                columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } dataFormat={(e) => this.colClick(e,this.props.column[key])} width={ this.props.width} dataAlign={ this.props.dataAlign} dataSort={ this.props.dataSort } hidden = { this.props.hidden} dataField={key} isKey key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
+                columnList.push(<TableHeaderColumn  class = {'text-uppercase tr-bg1'} thStyle={{ whiteSpace: 'normal', 'text-transform': 'uppercase', 'text-align': 'center', 'background': '#337ab7', 'color': 'white' }} dataFormat={(e) => this.colClick(e,this.props.column[key])} width={ this.props.width} dataAlign={ this.props.dataAlign} dataSort={ this.props.dataSort } hidden = { this.props.hidden} dataField={key} isKey key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
             }else{
-                columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } dataFormat={(e) => this.colClick(e,this.props.column[key])} width={ this.props.width} dataAlign={ this.props.dataAlign} dataSort={ this.props.dataSort } hidden = { this.props.hidden} dataField={key} key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
+                columnList.push(<TableHeaderColumn  class = {'text-uppercase tr-bg1'} thStyle={{ whiteSpace: 'normal', 'text-transform': 'uppercase', 'text-align': 'center', 'background': '#337ab7','color': 'white' }} dataFormat={(e) => this.colClick(e,this.props.column[key])} width={ this.props.width} dataAlign={ this.props.dataAlign} dataSort={ this.props.dataSort } hidden = { this.props.hidden} dataField={key} key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
             }
             cnt++;
         }
@@ -97,7 +97,7 @@ DataTable.defaultProps = {
     rowClickHandler: () => {},
     colClickHandler:() => {},
     selectRowProp : false,
-    search: true,
+    search: false,
     width: 100,
     dataAlign: 'center',
     hidden: false

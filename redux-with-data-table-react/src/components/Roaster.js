@@ -12,7 +12,8 @@ var Loader = require('react-loader');
 var fetchRoasterUrl = config.fetchRoasterUrl;
 
 const selectRowProp = {
-    mode: 'checkbox'
+    mode: 'checkbox',
+    'background-color': '#eee'
 }
 
 function onRowSelect(){
@@ -71,14 +72,16 @@ class Roaster extends Component {
 
 	render(){
 	    return (
-			<div className="adminDashboard">
+			<div className="adminDashboard ">
 				<Loader loaded={this.props.RoasterActionsReducer.loaded}>
 					<div className="pagination-div">
-						<a id="next" className="pagination-button pull-right" href="#" onClick= {(e) => this.fetchData(e,"nextData")} >»</a>
-						<a id="prev" className="pagination-button pull-right" href="#" onClick= {(e) => this.fetchData(e,"prevData")} >«</a>
+						<a id="next" className="pagination-button pull-right a.pagination-button" href="#" onClick= {(e) => this.fetchData(e,"nextData")} >»</a>
+						<a id="prev" className="pagination-button pull-right a.pagination-button" href="#" onClick= {(e) => this.fetchData(e,"prevData")} >«</a>
 					</div>
-					<DataTable dashboardData={this.props.RoasterActionsReducer.dashboardData} column={this.props.RoasterActionsReducer.columns} keyIndex="1" colClickHandler= {onCellClick} clickAction={onRowSelect} selectRowProp = {selectRowProp}
+                    <div class="text-uppercase tr-bg1">
+                    <DataTable dashboardData={this.props.RoasterActionsReducer.dashboardData} column={this.props.RoasterActionsReducer.columns} keyIndex="0" colClickHandler= {onCellClick} clickAction={onRowSelect}
                     ></DataTable>
+                        </div>
 				</Loader>
 			</div>);
 	}
