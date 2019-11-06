@@ -138,3 +138,4 @@ exports.getBasicAuthorization = function(username,password) {
     var encodedData = window.btoa(username+password);
     return 'Basic '+encodedData;
 }
+

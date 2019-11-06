@@ -15,10 +15,6 @@ function onCellClick(cell){
 	console.log(cell);
 }
 
-const columnWidth = {
-
-};
-
 class Status extends Component {
 	constructor(props){
   		super(props);
@@ -34,6 +30,9 @@ class Status extends Component {
  		this.setState({notificationMessage:message,showNotification:true});
  	};
 
+    fetchData(e,data){
+        alert("write code to fetch "+ data);
+    }
 	fetchDashboardData(){
 		//add server call instead
 		let serverResponse = roasterData;
@@ -58,7 +57,12 @@ class Status extends Component {
 			return (
 				<div className="adminDashboard">
 					<Loader loaded={this.state.loaded}>
-						<DataTable dashboardData={this.state.dashboardData} column={columns} keyIndex="1" colClickHandler= {onCellClick} clickAction={onRowSelect} columnWidth={columnWidth}  showSearchBar={true} ></DataTable>
+                            <div className="pagination-div">
+                                <a id="next" className="pagination-button pull-right " href="#" onClick= {(e) => this.fetchData(e,"nextData")} >»</a>
+                                <a id="prev" className="pagination-button pull-right black" href="#" onClick= {(e) => this.fetchData(e,"prevData")} >«</a>
+                            </div>
+
+                            <DataTable dashboardData={this.state.dashboardData} column={columns} keyIndex="0" colClickHandler= {onCellClick} clickAction={onRowSelect} ></DataTable>
 					</Loader>
 				</div>);
 		}

@@ -1,0 +1,38 @@
+.sub-navigation1 {
+    text-align: center;
+    margin-bottom: 0;
+    padding: 0;
+    background: #EFEEEE;
+    min-height: 20px;
+}
+
+.sub-navigation2 {
+    text-align: center;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.sub-navigation1 ul a {
+    color: #A9A7A7;
+    text-decoration: none;
+    padding: 12px 20px;
+    text-transform: capitalize;
+    position: relative;
+    display: inline-block;
+}
+
+.tr-bg1 {
+    background-color: #f1f1f1;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.tr-bg1 {
+    background-color: #f1f1f1;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}

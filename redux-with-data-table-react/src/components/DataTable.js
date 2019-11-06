@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import GetApp from 'material-ui/svg-icons/action/get-app';
 
 const exportButtonStyle = {
-    marginLeft:'25px',
+    marginLeft:'25px'
 }
 
 class DataTable extends Component {
@@ -15,12 +15,9 @@ class DataTable extends Component {
     componentWillMount(){
           this.datatableOptions = {
             page: 1,  // which page you want to show as default
-            sizePerPageList: [ {
-                text: '10', value: 10
-            } ], // you can change the dropdown list for size per page
-            sizePerPage: this.props.sizePerPage,  // which size per page you want to locate as default
+            sizePerPage: 10,  // which size per page you want to locate as default
             pageStartIndex: 1, // where to start counting the pages
-            paginationSize: 3,  // the pagination bar size.
+            paginationSize: 5,  // the pagination bar size.
             prePage: 'Prev', // Previous page button text
             nextPage: 'Next', // Next page button text
             firstPage: 'First', // First page button text
@@ -29,7 +26,6 @@ class DataTable extends Component {
             nextPageTitle: 'Go to next',
             firstPageTitle: 'Go to first',
             lastPageTitle: 'Go to Last',
-            //paginationShowsTotal: this.renderShowsTotal,
             paginationPosition: 'bottom',
             clearSearch: true,
             alwaysShowAllBtns: true,
@@ -37,7 +33,7 @@ class DataTable extends Component {
             exportCSVBtn: this.createCustomExportCSVButton,
             defaultSortName: this.props.defaultSortColumn,
             defaultSortOrder: this.props.sortingOrder,
-            //onRowClick: this.props.rowClickHandler,
+            hidden: false,
         };
     }
     buttonFormatter(cell, row){
@@ -58,9 +54,10 @@ class DataTable extends Component {
         );
      }
 
-    colClick(cell, row){
+    colClick(cell, colheader){
+        console.log(cell,colheader);
         return (
-            <label onClick={() => {this.props.colClickHandler(cell)}} className="pointer">
+            <label onClick={() => {this.props.colClickHandler(cell,colheader)}} className="pointer">
                 {cell}
         </label>) ;
     }
@@ -72,18 +69,11 @@ class DataTable extends Component {
         let columnList = [];
         let cnt = 0;
     	for(var key in this.props.column){
-            let hidden = false;
-            if(this.props.hiddenColumn === key){
-                hidden = true;
-            }
-            let width = "100";
-            if(this.props.width !== undefined && this.props.width[key] !== undefined){
-                 width = this.props.width[key];
-            }
+
             if(parseInt(this.props.keyIndex,10) === cnt) {
-                columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } dataFormat={this.colClick.bind(this)} width={width} dataSort={ this.props.dataSort } hidden = {hidden} dataField={key} isKey key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
+                columnList.push(<TableHeaderColumn  class = {'text-uppercase tr-bg1'} thStyle={{ whiteSpace: 'normal', 'text-transform': 'uppercase', 'text-align': 'center', 'background': '#337ab7', 'color': 'white' }} dataFormat={(e) => this.colClick(e,this.props.column[key])} width={ this.props.width} dataAlign={ this.props.dataAlign} dataSort={ this.props.dataSort } hidden = { this.props.hidden} dataField={key} isKey key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
             }else{
-                columnList.push(<TableHeaderColumn  thStyle={ { whiteSpace: 'normal' } } dataFormat={this.colClick.bind(this)} width={width} dataSort={ this.props.dataSort } hidden = {hidden} dataField={key} key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
+                columnList.push(<TableHeaderColumn  class = {'text-uppercase tr-bg1'} thStyle={{ whiteSpace: 'normal', 'text-transform': 'uppercase', 'text-align': 'center', 'background': '#337ab7','color': 'white' }} dataFormat={(e) => this.colClick(e,this.props.column[key])} width={ this.props.width} dataAlign={ this.props.dataAlign} dataSort={ this.props.dataSort } hidden = { this.props.hidden} dataField={key} key={cnt}>{this.props.column[key]}</TableHeaderColumn>);
             }
             cnt++;
         }
@@ -91,7 +81,7 @@ class DataTable extends Component {
             columnList.push(<TableHeaderColumn width={'22'} dataField= "button" key="buttonClick" dataFormat={this.buttonFormatter.bind(this)} >Action</TableHeaderColumn>);
         }
     	return (
-    			<BootstrapTable data={ this.props.dashboardData }  pagination={ true } ignoreSinglePage={true} options={ this.datatableOptions } search = {this.props.showSearchBar} exportCSV = {this.props.showExportOption}>
+    			<BootstrapTable data={ this.props.dashboardData }  pagination={ true } ignoreSinglePage={true} options={ this.datatableOptions } search = {this.props.search} exportCSV = {this.props.showExportOption} selectRow={ this.props.selectRowProp }>
                 	{columnList}
         		</BootstrapTable>
         );
@@ -105,7 +95,12 @@ DataTable.defaultProps = {
     sortingOrder: "desc",
     clickAction: () => {},
     rowClickHandler: () => {},
-    colClickHandler:() => {}
+    colClickHandler:() => {},
+    selectRowProp : false,
+    search: false,
+    width: 100,
+    dataAlign: 'center',
+    hidden: false
 };
 
 DataTable.propTypes = {
